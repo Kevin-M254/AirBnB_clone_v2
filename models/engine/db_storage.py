@@ -42,29 +42,29 @@ class DBStorage:
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        def all(self, cls=None):
-            """query on the current db session all cls objects"""
-            dct = {}
-            if cls is None:
-                for c in classes.values():
-                    objs = self.__session.query(c).all()
-                    for obj in objs:
-                        key = obj.__class__.__name__ + '.' + obj.id
-                        dct[key] = obj
-            else:
-                objs = self.__session.query(cls).all()
+    def all(self, cls=None):
+        """query on the current db session all cls objects"""
+        dct = {}
+        if cls is None:
+            for c in classes.values():
+                objs = self.__session.query(c).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     dct[key] = obj
-            return dct
+        else:
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + obj.id
+                dct[key] = obj
+        return dct
 
-        def new(self, obj):
-            """adds a new obj to the current db session"""
-            if obj is not None:
-                try:
-                    self.__session.add(obj)
-                    self.__session.flush()
-                    self.__session.refresh(obj)
-                except Exception as ex:
-                    self.__session.rollback()
-                    raise ex
+    def new(self, obj):
+        """adds a new obj to the current db session"""
+        if obj is not None:
+            try:
+                self.__session.add(obj)
+                self.__session.flush()
+                self.__session.refresh(obj)
+            except Exception as ex:
+                self.__session.rollback()
+                raise ex
