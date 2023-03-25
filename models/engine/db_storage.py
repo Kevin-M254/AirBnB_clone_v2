@@ -2,7 +2,7 @@
 """database storage engine"""
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scorped_session
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models.amenity import Amenity
 from models.base_model import Base
 from models.city import City
